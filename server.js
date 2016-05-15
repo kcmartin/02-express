@@ -5,8 +5,16 @@ var http = require("http"),
 
 const app = express();
 
+app.use((request, response, next) => {
+    console.log("In middleware 1");
+    response.write("HEADER");
+    next();
+    console.log("Out of middleware 1");
+});
+
 app.get("/", (request, response) => {
     response.end("Hello, World! Yay!");
+    console.log("In handler");
 });
 
 const server = new http.Server(app);
