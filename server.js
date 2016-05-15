@@ -5,11 +5,22 @@ var http = require("http"),
 
 const app = express();
 
+// Pipeline: browser -> node -> express -> M1 -> M2 -> handler
+// then back again
+
 app.use((request, response, next) => {
     console.log("In middleware 1");
-    response.write("HEADER");
     next();
     console.log("Out of middleware 1");
+});
+
+// builtin serving of static files
+app.use(express.static("./public"));
+
+app.use((request, response, next) => {
+    console.log("--- In middleware 2");
+    next();
+    console.log("--- Out of middleware 2");
 });
 
 app.get("/", (request, response) => {
