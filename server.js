@@ -4,6 +4,7 @@ var http = require("http"),
     express = require("express");
 
 const app = express();
+app.set("view engine", "jade");
 
 // Pipeline: browser -> node -> express -> M1 -> M2 -> handler
 // then back again
@@ -26,6 +27,10 @@ app.use((request, response, next) => {
 app.get("/", (request, response) => {
     response.end("Hello, World! Yay!");
     console.log("In handler");
+});
+
+app.get("/home", (request, response) => {
+    response.render("index", {title: "TITLE!"});
 });
 
 const server = new http.Server(app);
