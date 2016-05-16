@@ -1,7 +1,8 @@
 "use strict";
 
 var http = require("http"),
-    express = require("express");
+    express = require("express"),
+    socketIo = require("socket.io");
 
 const app = express();
 app.set("view engine", "jade");
@@ -34,6 +35,7 @@ app.get("/home", (request, response) => {
 });
 
 const server = new http.Server(app);
+const io = socketIo(server);
 
 const port = 3000;
 server.listen(port, () => {
