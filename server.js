@@ -27,6 +27,9 @@ const io = socketIo(server);
 
 io.on("connection", socket => {
     console.log("Client connected!");
+    socket.on("chat:add", data => {
+        console.log(data);
+    });
 });
 
 const port = 3000;
