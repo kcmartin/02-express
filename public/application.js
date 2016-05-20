@@ -1,7 +1,22 @@
 "use strict";
 
 const socket = io();
-// socket.emit is the opposite of socket.on
-socket.emit("chat:add", {
-    message: "Blegh"
+
+const chatInput = document.querySelector(".chat-form input[type=text]");
+
+chatInput.addEventListener("keypress", event => {
+    if (event.keyCode !== 13)
+        return;
+
+    event.preventDefault();
+
+    const text = event.target.value.trim();
+    if (text.length === 0)
+        return;
+
+    socket.emit("chat:add", {
+        message: text
+    });
+
+    event.target.value = "";
 });
