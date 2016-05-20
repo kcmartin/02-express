@@ -10,24 +10,12 @@ app.set("view engine", "jade");
 // Pipeline: browser -> node -> express -> M1 -> M2 -> handler
 // then back again
 
-app.use((request, response, next) => {
-    console.log("In middleware 1");
-    next();
-    console.log("Out of middleware 1");
-});
 
 // builtin serving of static files
 app.use(express.static("./public"));
 
-app.use((request, response, next) => {
-    console.log("--- In middleware 2");
-    next();
-    console.log("--- Out of middleware 2");
-});
-
 app.get("/", (request, response) => {
     response.end("Hello, World! Yay!");
-    console.log("In handler");
 });
 
 app.get("/home", (request, response) => {
@@ -36,6 +24,10 @@ app.get("/home", (request, response) => {
 
 const server = new http.Server(app);
 const io = socketIo(server);
+
+io.on("connection", socket => {
+    console.log("Client connected!");
+});
 
 const port = 3000;
 server.listen(port, () => {
