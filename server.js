@@ -29,6 +29,8 @@ io.on("connection", socket => {
     console.log("Client connected!");
     socket.on("chat:add", data => {
         console.log(data);
+        // broadcast to everyone
+        io.emit("chat:added", data);
     });
 });
 

@@ -20,3 +20,11 @@ chatInput.addEventListener("keypress", event => {
 
     event.target.value = "";
 });
+
+const chatList = document.querySelector(".chat-list ul");
+socket.on("chat:added", data => {
+    const messageElement = document.createElement("li");
+    messageElement.innerText = data.message;
+    chatList.appendChild(messageElement);
+    chatList.scrollTop = chatList.scrollHeight;
+});
